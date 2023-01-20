@@ -1,36 +1,48 @@
 import React from "react";
 
 function App() {
-  const [email, setEmail] = React.useState("");
-  const [fullName, setFullName] = React.useState({ fname: "", lname: "" });
+  const [details, setDetails] = React.useState({
+    fname: "",
+    lname: "",
+    email: "",
+  });
 
-  function updateName(event) {
-    const name = event.target.value;
+  function updateDetails(event) {
+    const detail = event.target.value;
     const inputName = event.target.name;
-    setFullName((prevValue) => {
+    setDetails((prevValue) => {
       if (inputName === "fName") {
-        return { fname: name, lname: prevValue.lname };
+        return {
+          fname: detail,
+          lname: prevValue.lname,
+          email: prevValue.email,
+        };
+      } else if (inputName === "lName") {
+        return {
+          fname: prevValue.fname,
+          lname: detail,
+          email: prevValue.email,
+        };
       } else {
-        return { fname: prevValue.fname, lname: name };
+        return {
+          fname: prevValue.fname,
+          lname: prevValue.lname,
+          email: detail,
+        };
       }
     });
-  }
-
-  function updateEmail(event) {
-    const newEmail = event.target.value;
-    setEmail(newEmail);
   }
 
   return (
     <div className="container">
       <h1>
-        Hello {fullName.fname} {fullName.lname}
+        Hello {details.fname} {details.lname}
       </h1>
-      <p>{email}</p>
+      <p>{details.email}</p>
       <form>
-        <input name="fName" placeholder="First Name" onChange={updateName} />
-        <input name="lName" placeholder="Last Name" onChange={updateName} />
-        <input name="email" placeholder="Email ID" onChange={updateEmail} />
+        <input name="fName" placeholder="First Name" onChange={updateDetails} />
+        <input name="lName" placeholder="Last Name" onChange={updateDetails} />
+        <input name="email" placeholder="Email ID" onChange={updateDetails} />
         <button>Submit</button>
       </form>
     </div>
